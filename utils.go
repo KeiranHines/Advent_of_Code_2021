@@ -6,10 +6,15 @@ import (
 	"strings"
 )
 
-func fileToIntArray(filename string, delim string) []int {
+func FileToStringArray(filename string, delim string) []string {
+	data, _ := os.ReadFile(filename)
+	return strings.Split(string(data), delim)
+
+}
+
+func FileToIntArray(filename string, delim string) []int {
 	var parsed []int
-	data, _ := os.ReadFile("inputs/d1a")
-	lines := strings.Split(string(data), "\n")
+	lines := FileToStringArray(filename, delim)
 	for _, line := range lines {
 		num, _ := strconv.Atoi(line)
 		parsed = append(parsed, num)
