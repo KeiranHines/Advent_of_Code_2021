@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+// ProcessCommandsCorrectly Processes the submarine commands based on the expected insructions
+// x : The initial x position
+// y : The initial y position
+// Returns The new x and y value after the sub has executed all the instructions
 func ProcessCommandsBasic(data []string, x int, y int) (int, int) {
 	for _, command := range data {
 		split := strings.Split(command, " ")
@@ -25,6 +29,11 @@ func ProcessCommandsBasic(data []string, x int, y int) (int, int) {
 	return x, y
 }
 
+// ProcessCommandsCorrectly Processes the submarine commands as per the instruction manual
+// x : The initial x position
+// y : The initial y position
+// aim : The initial tragectory of the submarine
+// Returns The new x and y value after the sub has executed all the instructions
 func ProcessCommandsCorrectly(data []string, x int, y int, aim int) (int, int) {
 	for _, command := range data {
 		split := strings.Split(command, " ")
