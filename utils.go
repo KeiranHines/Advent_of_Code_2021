@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+func ReadFile(filename string) []byte {
+	data, _ := os.ReadFile(filename)
+	return data
+}
+
 func FileToStringArray(filename string, delim string) []string {
 	data, _ := os.ReadFile(filename)
 	return strings.Split(string(data), delim)
@@ -13,11 +18,12 @@ func FileToStringArray(filename string, delim string) []string {
 }
 
 func FileToIntArray(filename string, delim string) []int {
-	var parsed []int
 	lines := FileToStringArray(filename, delim)
-	for _, line := range lines {
+	parsed := make([]int, len(lines))
+
+	for i, line := range lines {
 		num, _ := strconv.Atoi(line)
-		parsed = append(parsed, num)
+		parsed[i] = num
 	}
 
 	return parsed
