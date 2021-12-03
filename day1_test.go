@@ -42,3 +42,11 @@ func TestInputPart2(t *testing.T) {
 		t.Fatal("Expected x, got", count)
 	}
 }
+
+func TestInputPart2Optimized(t *testing.T) {
+	data := FileToIntArray("inputs/d1a", "\n")
+	count := CountSlidingWindowIncreaseOptimized(data, 3)
+	if count != 1858 {
+		t.Fatal("Expected x, got", count)
+	}
+}

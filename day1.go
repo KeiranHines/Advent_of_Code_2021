@@ -33,3 +33,16 @@ func CountSlidingWindowIncrease(data []int, window int) int {
 	}
 	return count
 }
+
+// CountSlidingWindowIncrease counts the number of times the sum of a window size y in the data array is greater than
+// the preceeding window sum
+// It returns the count.
+func CountSlidingWindowIncreaseOptimized(data []int, window int) int {
+	count := 0
+	for i, num := range data[window:] {
+		if num > data[i] {
+			count++
+		}
+	}
+	return count
+}
