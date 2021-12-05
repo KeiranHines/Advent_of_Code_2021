@@ -5,6 +5,9 @@ import (
 	"strings"
 )
 
+// Parses a bingo file to a list of numbers to be drawn and the list
+// of active game boards
+// Returns the list of numbers to draw in order, the game boards
 func ParseFileString(input []string) ([]string, [][][]string) {
 	numString := strings.Split(input[0], ",")
 	line := strings.ReplaceAll(input[2], "  ", " ")
@@ -23,20 +26,29 @@ func ParseFileString(input []string) ([]string, [][][]string) {
 	return numString, boards
 }
 
-// Return boardNum, round of the winner.
-func PlayBingo(rounds []string, boards [][][]string) (int, int) {
-	for _, round := range rounds {
-		for i, board := range boards {
-			winner := PlayRound(round, board)
-			if winner {
-				winningNum, _ := strconv.Atoi(round)
-				return i, winningNum
+// PlayBingo Plays bingo until a winner is found. If multiple winners are found on the same
+// round all the winners are removed and the list of new player boards is returned.
+// Returns the boards remaining in play, the winning board, and the remaining round numbers
+func PlayBingo(rounds []string, boards [][][]string) ([][][]string, [][]string, []string) {
+	for r, round := range rounds {
+		var winner [][]string = nil
+		for i := len(boards) - 1; i >= 0; i-- {
+			board := boards[i]
+			w := PlayRound(round, board)
+			if w {
+				winner = board
+				boards = KickPlayer(i, boards)
 			}
 		}
+		if winner != nil {
+			return boards, winner, rounds[r:]
+		}
 	}
-	return -1, 0
+	return make([][][]string, 0), make([][]string, 0), make([]string, 0)
 }
 
+// PlayRound plays a round of bingo for the give game board.
+// Marks the played number as and empty string if it has been found.
 func PlayRound(round string, board [][]string) bool {
 	for x, row := range board {
 		for y, num := range row {
@@ -51,6 +63,7 @@ func PlayRound(round string, board [][]string) bool {
 	return false
 }
 
+// CheckRowWins Checks if all the numbers in the given row have been marked (empty string).
 func CheckRowWins(row []string) bool {
 	for _, num := range row {
 		if num != "" {
@@ -60,6 +73,8 @@ func CheckRowWins(row []string) bool {
 	return true
 }
 
+// CheckColumnWins Checks if all the numbers in the given col have been marked (empty string).
+// Returns true if they are all marked.
 func CheckColumnWins(board [][]string, col int) bool {
 	for _, row := range board {
 		if row[col] != "" {
@@ -69,6 +84,8 @@ func CheckColumnWins(board [][]string, col int) bool {
 	return true
 }
 
+// CalcRemainingNumbers
+// Returns the sum of all unmarked numbers on the players board.
 func CalcRemainingNumbers(board [][]string) int {
 	count := 0
 	for _, row := range board {
@@ -78,4 +95,12 @@ func CalcRemainingNumbers(board [][]string) int {
 		}
 	}
 	return count
+}
+
+// KickPlayer Removes a player at the given index from the active boards.
+// Returns the new list of active players.
+func KickPlayer(board int, boards [][][]string) [][][]string {
+	newPlayerCount := len(boards) - 1
+	boards[board] = boards[newPlayerCount]
+	return boards[:newPlayerCount]
 }
