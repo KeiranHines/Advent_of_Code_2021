@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -41,4 +42,16 @@ func Min(x, y int) int {
 		return x
 	}
 	return y
+}
+
+type ByRune []rune
+
+func (r ByRune) Len() int           { return len(r) }
+func (r ByRune) Swap(i, j int)      { r[i], r[j] = r[j], r[i] }
+func (r ByRune) Less(i, j int) bool { return r[i] < r[j] }
+
+func SortStringByCharacter(s string) string {
+	var r ByRune = []rune(s)
+	sort.Sort(r)
+	return string(r)
 }

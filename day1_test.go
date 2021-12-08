@@ -13,10 +13,11 @@ func TestPart1Example(t *testing.T) {
 
 //TestInputPart1 runs the part 1 challenge
 func TestInputPart1Method(t *testing.T) {
+	ans := 1832
 	data := FileToIntArray("inputs/d1a", "\n")
 	count := CountIncreasing(data)
-	if count != 1832 {
-		t.Fatal("Expected 1832, got", count)
+	if count != ans {
+		t.Fatalf("Expected %v, got %v", ans, count)
 	}
 }
 
@@ -36,17 +37,19 @@ func TestInputPart2Example(t *testing.T) {
 }
 
 func TestInputPart2(t *testing.T) {
+	ans := 1858
 	data := FileToIntArray("inputs/d1a", "\n")
 	count := CountSlidingWindowIncrease(data, 3)
-	if count != 1858 {
-		t.Fatal("Expected x, got", count)
+	if count != ans {
+		t.Fatalf("Expected %v, got %v", ans, count)
 	}
 }
 
 func TestInputPart2Optimized(t *testing.T) {
+	ans := 1858
 	data := FileToIntArray("inputs/d1a", "\n")
 	count := CountSlidingWindowIncreaseOptimized(data, 3)
-	if count != 1858 {
-		t.Fatal("Expected x, got", count)
+	if count != ans {
+		t.Fatalf("Expected %v, got %v", ans, count)
 	}
 }
