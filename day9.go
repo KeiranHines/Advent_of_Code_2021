@@ -8,6 +8,8 @@ type heatPoint struct {
 	num int
 }
 
+// FindLowPoints finds the low points in a heatmap.
+// Returns an array of heatPoints being the lowest nearby points.
 func FindLowPoints(input []string) []heatPoint {
 	maxY := len(input) - 1
 	maxX := len(input[0]) - 1
@@ -23,6 +25,8 @@ func FindLowPoints(input []string) []heatPoint {
 	return lowPoints
 }
 
+// isLowPoint
+// Returns two if the point is the lowest of the adjacent points.
 func isLowPoint(input []string, line string, maxX int, maxY int, x int, y int, i int) bool {
 	left := Max(x-1, 0)
 	right := Min(x+1, maxX)
@@ -37,6 +41,8 @@ func isLowPoint(input []string, line string, maxX int, maxY int, x int, y int, i
 	return (x == 0 || i < leftNum) && (x == maxX || i < rightNum) && (y == 0 || i < topNum) && (y == maxY || i < bottomNum)
 }
 
+// CalculateRiskLevel Calculates the risk points of the low points.
+// Returns the risk of each low point
 func CalculateRiskLevel(heatPoints []heatPoint) int {
 	sum := 0
 	for _, point := range heatPoints {
@@ -45,19 +51,8 @@ func CalculateRiskLevel(heatPoints []heatPoint) int {
 	return sum
 }
 
-func printNines(input []string) {
-	for _, line := range input {
-		for _, char := range line {
-			if char == '9' {
-				print("9")
-			} else {
-				print(".")
-			}
-		}
-		println()
-	}
-}
-
+// CalculateBasinSize Calculates the basin size using a Breadth first search approach.
+// Returns a map of the points that make up a basin starting at a given lowpoint point.
 func CalculateBasinSize(input []string, point heatPoint) map[heatPoint]bool {
 	maxY := len(input) - 1
 	maxX := len(input[0]) - 1
