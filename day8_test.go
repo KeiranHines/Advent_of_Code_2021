@@ -32,7 +32,7 @@ func TestAbusingOne(t *testing.T) {
 	sixes[1] = six
 	sixes[2] = nine
 
-	s, c, f := find6(one, sixes)
+	s, c, f := find6cf(one, sixes)
 	if s != six {
 		t.Fatal("expected to get six back not", s)
 	}
@@ -85,7 +85,7 @@ func TestZeroNine(t *testing.T) {
 
 func TestDay8Example2(t *testing.T) {
 	input := FileToStringArray("inputs/d8t", "\n")
-	result := processOutput(input)
+	result := ProcessInputsAndOutputs(input)
 	if result != 61229 {
 		t.Fatal("Exepected 61229 got ", result)
 	}
@@ -94,7 +94,7 @@ func TestDay8Example2(t *testing.T) {
 func TestDay8Part2(t *testing.T) {
 	ans := 975706
 	input := FileToStringArray("inputs/d8a", "\n")
-	result := processOutput(input)
+	result := ProcessInputsAndOutputs(input)
 	if result != ans {
 		t.Fatalf("Exepected %v got %v", ans, result)
 	}
