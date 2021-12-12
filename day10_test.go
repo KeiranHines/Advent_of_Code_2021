@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestDay1Example1(t *testing.T) {
+func TestDay10Example1(t *testing.T) {
 	input := FileToStringArray("inputs/d10t", "\n")
 	_, cor := FindCorruptedAndIncompleteLines(input)
 	score := CalculateScore(cor)
